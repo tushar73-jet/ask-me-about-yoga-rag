@@ -1,24 +1,10 @@
-const {GoogleGenerativeAI} = require("@google/generative-ai")
+const crypto = require("crypto");
 
-let genAI
+const embedText = async (text) => {
+  const hash = crypto.createHash("sha256").update(text).digest();
+  return Array.from(hash).map(b => b / 255);
+};
 
-const getClient = () => {
-    if(!genAI){
-        genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+module.exports = { embedText };
 
-    }
-    return genAI
-}
-
-
-const embedText = async(text) =>{
-    const client = getClient()
-    const model = client.getGenerativeModel({
-        model:'text-embedding-004'
-    })
-    const result = await model.embedContent(text)
-    return result.embedding.values
-}
-
-module.exports = {embedText}
 

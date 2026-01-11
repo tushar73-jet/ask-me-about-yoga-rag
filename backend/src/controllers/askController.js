@@ -1,15 +1,37 @@
 const {isUnsafe,safetyMessage} = require("../services/safety");
+const { retrieveRelevantChunks } = require("../../../rag/retrieval/retriever");
+const { generateAnswer } = require("../services/llm");
+
+
 
 const askQuestion = async(req,res) => {
-  const {query} = req.body;
+try{
+  const {question} = req.body;
 
-  if (!query) {
-    return res.status(400).json({error: "query missing"});
+  if (!question) {
+    return res.status(400).json({error: "question missing"});
   }
 
-  const unsafe = isUnsafe(query)
+  //safety check
+  const unsafe = isUnsafe(question)
 
-  let answer = 'answer'
+
+  //rag retrieval
+  const chunks = await retrieveRelevantChunks(question)
+
+
+  //build context
+  const context = chunks.map(i => i.content.text).join("\n\n")
+
+  //generate ans
+  let answer = await generateAnswer({
+    question,
+    context,
+    unsafe
+  })
+
+
+
 
   if (unsafe){
     answer = safetyMessage()
@@ -17,9 +39,13 @@ const askQuestion = async(req,res) => {
 
   res.json({
     answer,
-    sources: [],
-    unsafe
+    sources: chunks.map(i => i.content.source),
+    isUnsafe: unsafe
+
   });
+    } catch(err)
+    {console.error(err)
+    res.status(500).json({ error: "Internal server error" })}
 };
 
 module.exports = {askQuestion};
