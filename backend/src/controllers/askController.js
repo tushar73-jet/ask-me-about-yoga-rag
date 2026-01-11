@@ -1,3 +1,5 @@
+const {isUnsafe,safetyMessage} = require("../services/safety");
+
 const askQuestion = async(req,res) => {
   const {query} = req.body;
 
@@ -5,10 +7,18 @@ const askQuestion = async(req,res) => {
     return res.status(400).json({error: "query missing"});
   }
 
+  const unsafe = isUnsafe(query)
+
+  let answer = 'answer'
+
+  if (unsafe){
+    answer = safetyMessage()
+  }
+
   res.json({
-    answer: "....",
+    answer,
     sources: [],
-    isUnsafe: false
+    unsafe
   });
 };
 
