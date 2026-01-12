@@ -1,47 +1,37 @@
-const memoryStore = []
+const faiss = require('faiss-node')
+
+let index = null
+let docs = []
+
+const DIMENSION = 384
 
 
-// save embedding with its related data
-const storeEmbedding = (vector, content) =>{
-    memoryStore.push({vector, content})
+const getIndex = () => {
+  if (!index) {
+    index = new faiss.IndexFlatL2(DIMENSION)
+  }
+  return index;
 }
 
+const addVectors = (vectors, metadata) => {
+  const faissIndex = getIndex()
 
-
-
-// measure how similar two vectors are
-const similarityScore = (vectorA, vectorB) => {
-    let dot = 0
-    let magA = 0
-    let magB = 0 
-
-
-
-for (let i = 0; i< vectorA.length; i ++){
-    dot += vectorA[i] * vectorB[i]
-    magA += vectorA[i] * vectorA[i]
-    magB += vectorB[i] * vectorB[i]
+  faissIndex.add(vectors)
+  docs.push(...metadata)
 }
 
-return dot / (Math.sqrt(magA)* Math.sqrt(magB))
+function searchVectors(queryVector, topK = 3) {
+  const result = getIndex().search(queryVector, topK);
 
-
-}
-
-// find most relevant stored data for user ques
-
-const findRelevantData = (questionVector,limit = 3) =>{
-    return memoryStore.map(i =>({
-        score: similarityScore(questionVector, i.vector),
-        content: i.content
-    }))
-    .sort((a,b)=>b.score-a.score)
-    .slice(0,limit)
+  return result.labels[0].map((id, i) => ({
+    score: result.distances[0][i],
+    content: docs[id],
+  }))
 }
 
 module.exports = {
-    storeEmbedding,
-    findRelevantData
-
-
+  addVectors,
+  searchVectors,
 }
+
+
