@@ -45,9 +45,10 @@ return (
     </button>
 
       {isUnsafe ? (
-        <p className='warning'>
-          warning
-          </p>
+        <div className='warning-block'>
+          <h3>Safety Notice</h3>
+        <p>{answer}</p>
+        </div>
 
       ):null}
 
@@ -72,6 +73,5 @@ return (
 )
 
 }
-
 
 export default App;
