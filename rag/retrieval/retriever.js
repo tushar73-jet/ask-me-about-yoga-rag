@@ -33,7 +33,7 @@ const retrieveRelevantChunks = async (query, limit = 3) => {
   await initializeVectorStore();
 
   const questionVector = await embedText(query);
-  return searchVectors([questionVector], limit);
+  return searchVectors(questionVector, limit);
 };
 
 module.exports = {

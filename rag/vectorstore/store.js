@@ -5,7 +5,6 @@ let docs = []
 
 const DIMENSION = 384
 
-
 const getIndex = () => {
   if (!index) {
     index = new faiss.IndexFlatL2(DIMENSION)
@@ -15,16 +14,31 @@ const getIndex = () => {
 
 const addVectors = (vectors, metadata) => {
   const faissIndex = getIndex()
+ 
 
-  faissIndex.add(vectors)
+  const flat = []
+
+  vectors.forEach((vec, i) => {
+    if (!Array.isArray(vec) || vec.length !== DIMENSION) {
+      throw new Error(`Invalid embedding at index ${i}`);
+    }
+    flat.push(...vec);
+  })
+  faissIndex.add(flat)
   docs.push(...metadata)
 }
 
 function searchVectors(queryVector, topK = 3) {
-  const result = getIndex().search(queryVector, topK);
+  if (!Array.isArray(queryVector) || queryVector.length !== DIMENSION) {
+    throw new Error("Invalid query embedding");
+  }
+  const result = getIndex().search(queryVector, topK)
 
-  return result.labels[0].map((id, i) => ({
-    score: result.distances[0][i],
+  const labels = Array.from(result.labels);
+  const distances = Array.from(result.distances);
+
+  return labels.map((id, i) => ({
+    score: distances[i],
     content: docs[id],
   }))
 }
