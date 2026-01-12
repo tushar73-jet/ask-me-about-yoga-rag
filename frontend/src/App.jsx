@@ -50,9 +50,7 @@ return (
         <p>{answer}</p>
         </div>
 
-      ):null}
-
-      {answer ? (
+      ):answer ? (
         <div className='answer'>
           <h3>Answer</h3>
           <p>{answer}</p>
