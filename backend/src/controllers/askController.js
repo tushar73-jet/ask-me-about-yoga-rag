@@ -1,6 +1,7 @@
 const {isUnsafe,safetyMessage} = require("../services/safety");
 const { retrieveRelevantChunks } = require("../../../rag/retrieval/retriever");
 const { generateAnswer } = require("../services/llm");
+const { logQuery } = require("../services/logger");
 
 
 
@@ -36,6 +37,14 @@ try{
   if (unsafe){
     answer = safetyMessage()
   }
+
+  await logQuery({
+  question,
+  answer,
+  sources: chunks.map(i => i.content.source),
+  isUnsafe: unsafe,
+})
+
 
   res.json({
     answer,
