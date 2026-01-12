@@ -22,7 +22,10 @@ const isUnsafe = (query = "") =>{
 }
 
 const safetyMessage = () => {
-    return ('warning message')
+    return ("⚠️ Your question involves a yoga practice that may not be safe without personalized guidance.\n\n" +
+    "Certain poses and techniques can be risky during conditions such as pregnancy, recent surgery, or medical concerns.\n\n" +
+    "Instead of advanced or inverted poses, consider gentle breathing exercises, restorative poses, or relaxation practices.\n\n" +
+    "Please consult a doctor or a certified yoga therapist before attempting these practices.")
 }
 
 
