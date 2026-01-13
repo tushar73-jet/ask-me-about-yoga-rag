@@ -16,7 +16,6 @@ Safety-first responses for medical or sensitive queries
 
 The system avoids unsafe medical advice and prioritizes user well-being, making it suitable for a wellness domain.
 
-🗂️ Folder Structure
 ask-me-about-yoga-rag/
 │
 ├── backend/
@@ -39,6 +38,7 @@ ask-me-about-yoga-rag/
 │
 ├── .gitignore
 └── README.md
+
 
 🏗️ Architecture Explanation
 1️⃣ Frontend (React + Vite)
