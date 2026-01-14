@@ -34,41 +34,52 @@ setLoading(false)
 
 return (
   <div className='container'>
+    <header>
     <h1>Ask Me Anything About Yoga</h1>
+    <p style={{ textAlign: 'center', color: 'var(--text-muted)' }}>
+      Your personal AI wellness guide, grounded in ancient wisdom.
+    </p>
+    </header>
+
+    <div className="input-section">
     <textarea
     value={question}
     placeholder="Ask anything about yoga..."
     onChange={(e) => setQuestion(e.target.value)}
     />
+    <div style={{ display: 'flex', justifyContent: 'center' }}>
+    
     <button onClick={askQuestion}>
-      {loading ? "Thinking..." : "Ask"}
+      {loading ? "Thinking..." : "Ask Guidance"}
     </button>
+    </div>
+    </div>
 
-      {isUnsafe ? (
-        <div className='warning-block'>
-          <h3>Safety Notice</h3>
-        <p>{answer}</p>
+      {loading && (
+        <div style={{ textAlign: 'center', padding: '2rem', opacity: 0.7 }}>
+          <p style={{ fontStyle: 'italic', color: 'var(--primary-color)' }}>Consulting the texts...</p>
         </div>
+      )}
 
-      ):answer ? (
-        <div className='answer'>
-          <h3>Answer</h3>
-          <p>{answer}</p>
+      {!loading && (isUnsafe || answer) && (
+        <div className={`result-card ${isUnsafe ? 'warning-block' : ''}`}>
+          {isUnsafe && <h3>Safety Notice</h3>}
+          {!isUnsafe && <h3>{answer}</h3>}
+
+      {sources.length > 0 && (
+            <div className="sources-section">
+              <h4>Sources Reviewed</h4>
+              <ul className="sources-list">
+                {sources.map((src, i) => (
+                  <li key={i} className="source-chip">{src}</li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
-      ):null}
-
-      {sources.length>0?(
-        <div className='sources'>
-          <h4>Sources</h4>
-          <ul>
-            {sources.map((src,i)=>(
-              <li key={i}>{src}</li>
-            ))}
-          </ul>
-          </div>
-      ):null}
-</div>
-)
-
+      )}
+    </div>
+  )
 }
-export default App;
+
+export default App
