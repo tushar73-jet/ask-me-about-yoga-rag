@@ -63,8 +63,9 @@ return (
 
       {!loading && (isUnsafe || answer) && (
         <div className={`result-card ${isUnsafe ? 'warning-block' : ''}`}>
-          {isUnsafe && <h3>Safety Notice</h3>}
-          {!isUnsafe && <h3>{answer}</h3>}
+          <h3>{isUnsafe ? "Safety Notice" : "Answer"}</h3>
+          <p>{answer}</p>
+
 
       {sources.length > 0 && (
             <div className="sources-section">
