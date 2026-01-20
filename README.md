@@ -199,22 +199,6 @@ The frontend is packaged into a fully working Android APK using **Capacitor**.
 
 ---
 
-## 🤖 AI Tools & Prompts Disclosure (Honest Declaration)
-
-**AI tools were used as a learning and debugging assistant**, similar to documentation or Stack Overflow, and **not** for blind copy-paste or auto-generated project creation.
-
-### Tools Used
-- **ChatGPT**: Used for understanding RAG architecture, debugging backend/frontend integration, clarifying FAISS/Safety logic, and Capacitor build assistance.
-- **Groq LLM**: Used only at runtime as the language model for generating answers.
-
-### Example Prompts Used
-- *"Explain how a Retrieval-Augmented Generation (RAG) pipeline works"*
-- *"How to implement safety checks for health-related queries in a wellness app"*
-- *"How to fix FAISS embedding dimension mismatch"*
-- *"How to build an Android APK using Capacitor and connect it to a backend"*
-
-### Declaration
-All final implementation decisions, code integration, debugging, project structure, and deployment steps were performed manually by me. AI tools were used strictly for conceptual clarity, debugging assistance, and best-practice guidance.
 
 ---
 [⬆ Back to Top](#-table-of-contents)
