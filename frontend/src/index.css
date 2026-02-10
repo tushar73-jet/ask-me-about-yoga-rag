@@ -147,6 +147,32 @@ textarea:focus {
   transform: none;
 }
 
+.btn-secondary {
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid var(--text-muted);
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 500;
+  margin-top: 1.5rem;
+}
+
+.btn-secondary:hover {
+  background: rgba(83, 107, 93, 0.1);
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.button-group {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+}
+
 /* Output Areas */
 .result-card {
   background: rgba(255, 255, 255, 0.4);

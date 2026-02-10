@@ -28,8 +28,15 @@ function App(){
 }catch (err) { 
 setAnswer("Something went wrong. Please try again.")
 } 
-setLoading(false)
-}
+  setLoading(false)
+  }
+
+  const handleReset = () => {
+    setQuestion("")
+    setAnswer("")
+    setSources([])
+    setIsUnsafe(false)
+  }
 
 
 return (
@@ -47,11 +54,15 @@ return (
     placeholder="Ask anything about yoga..."
     onChange={(e) => setQuestion(e.target.value)}
     />
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
-    
-    <button onClick={askQuestion}>
-      {loading ? "Thinking..." : "Ask Guidance"}
-    </button>
+    <div className="button-group">
+      <button className="btn-primary" onClick={askQuestion} disabled={loading}>
+        {loading ? "Thinking..." : "Ask Guidance"}
+      </button>
+      {(question || answer || sources.length > 0) && (
+        <button className="btn-secondary" onClick={handleReset}>
+          Reset
+        </button>
+      )}
     </div>
     </div>
 
